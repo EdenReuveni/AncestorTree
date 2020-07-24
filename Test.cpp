@@ -1,258 +1,178 @@
+
 #include "doctest.h"
 #include "FamilyTree.hpp"
 #include <string>
+#include <stdexcept>
+
 using namespace std;
-using namespace family;
-
-
-TEST_CASE("This test case check the following functuons : addFather(),relation(),find()") 
-{
-
-    ////////////////////////Test 1////////////////////////
-
-    Tree a("Avi");
-    a.addFather("Avi","Benny");
-    a.addFather("Benny","Caleb");
-    a.addFather("Caleb","Dani");
-    a.addFather("Dani","Emmet");
-    a.addFather("Emmet","Fredy");
-
-    //check relation() function
-
-    CHECK(a.relation("Avi") ==string("Just Me"));
-    CHECK(a.relation("Benny")==string("father"));
-    CHECK(a.relation("Caleb")==string("grandfather"));
-    CHECK(a.relation("Dani")==string("great-grandfather"));
-    CHECK(a.relation("Emmet")==string("great-great-grandfather"));
-    CHECK(a.relation("Fredy")==string("great-great-great-grandfather"));
-    CHECK(a.relation("avrahm")==string("unrelated"));
-
-
-    //check find() function
-
-    CHECK(a.find("Just Me") == string("Avi"));
-    CHECK(a.find("father") == string("Benny"));
-    CHECK(a.find("grandfather") == string("Caleb"));
-    CHECK(a.find("great-grandfather") == string("Dani"));
-    CHECK(a.find("great-great-grandfather") == string("Emmet"));
-    CHECK(a.find("great-great-great-grandfather") == string("Freddy"));
-
-    CHECK_THROWS_AS(a.find("uncle"),std::exception);
-    CHECK_THROWS_AS(a.find("son"),std::exception);
-    CHECK_THROWS_AS(a.find("brother"),std::exception); 
-    CHECK_THROWS_AS(a.find("great-great-great-great-great-grandfather"),std::exception);
-    CHECK_THROWS_AS(a.find("adopted"),std::exception);
-    CHECK_THROWS_AS(a.find("friend"),std::exception);
-    CHECK_THROWS_AS(a.find("greatt"),std::exception);
-
-
-     
-    ////////////////////////Test 2////////////////////////
-
-    Tree an("Anna");
-    an.addMother("Anna","Bella");
-    an.addMother("Bella","Catty");
-    an.addMother("Catty","Danna");
-    an.addMother("Daana","Emma");
-    an.addMother("Emma","Flura");
-
-    //check relation() function
-
-    CHECK(an.relation("Anna") ==string("Just Me"));
-    CHECK(an.relation("Bella")==string("mother"));
-    CHECK(an.relation("Catty")==string("grandmother"));
-    CHECK(an.relation("Danna")==string("great-grandmother"));
-    CHECK(an.relation("Emma")==string("great-great-grandmother"));
-    CHECK(an.relation("Flura")==string("great-great-great-grandmother"));
-    CHECK(an.relation("Annabel")==string("unrelated"));
-
-
-    //check find() function
-
-    CHECK(an.find("Just Me") == string("Anna"));
-    CHECK(an.find("mother") == string("Bella"));
-    CHECK(an.find("grandmother") == string("Catty"));
-    CHECK(an.find("great-grandmother") == string("Danna"));
-    CHECK(an.find("great-great-grandmother") == string("Emma"));
-    CHECK(an.find("great-great-great-grandmother") == string("Flura"));
-
-    CHECK_THROWS_AS(an.find("aunt"),std::exception);
-    CHECK_THROWS_AS(an.find("daghter"),std::exception);
-    CHECK_THROWS_AS(an.find("sister"),std::exception); 
-    CHECK_THROWS_AS(an.find("great-great-great-great-great-grandmother"),std::exception);
-    CHECK_THROWS_AS(an.find("adopted"),std::exception);
-    CHECK_THROWS_AS(an.find("me"),std::exception);
-    CHECK_THROWS_AS(an.find("just"),std::exception);
-
-
-    
-
-        
-    ////////////////////////Test 3//////////////////////// 
-
-    Tree al ("Alon");     
-    al.addFather("Alon","Bob");
-    al.addFather("Bob","Corey");
-    al.addFather("Corey","Dovie");
-    al.addFather("Dovie","Eli");
-    al.addFather("Eli","Fin");
-
-    //check relation() function
-
-    CHECK(al.relation("Alon") ==string("Just Me"));   
-    CHECK(al.relation("Bob")==string("father"));
-    CHECK(al.relation("Corey")==string("grandfather"));
-    CHECK(al.relation("Dovie")==string("great-grandfather"));
-    CHECK(al.relation("Eli")==string("great-great-grandfather"));
-    CHECK(al.relation("Fin")==string("great-great-great-grandfather"));
-    CHECK(al.relation("Jack")==string("unrelated"));
-
-
-
-
-    //check find() function
-
-    CHECK(al.find("Just Me") == string("Alon")); 
-    CHECK(al.find("father") == string("Bob"));
-    CHECK(al.find("grandfather") == string("Corey"));
-    CHECK(al.find("great-grandfather") == string("Dovie"));
-    CHECK(al.find("great-great-grandfather") == string("Eli"));
-    CHECK(al.find("great-great-great-grandfather") == string("Fin"));
-
-    CHECK_THROWS_AS(al.find("auntie"),std::exception);  
-    CHECK_THROWS_AS(al.find("enemy"),std::exception);
-    CHECK_THROWS_AS(al.find("bro"),std::exception); 
-    CHECK_THROWS_AS(al.find("great-great-great-great-great-grandfather"),std::exception);
-    CHECK_THROWS_AS(al.find("half-brother"),std::exception);
-    CHECK_THROWS_AS(al.find("neighbor"),std::exception);
-    CHECK_THROWS_AS(al.find("niece"),std::exception);
-
-
-
- 
-
-
-////////////////////////Test 4//////////////////////// 
-
-    Tree b ("Betty");     
-    b.addFather("Betty","Geva");
-    b.addMother("Betty","Gill");
-
-    b.addFather("Geva","Dekel");
-    b.addMother("Geva","Dikla");
-
-    b.addFather("Gill","Dori");
-    b.addMother("Gill","Dalia");
-
-    b.addFather("Dekel","Erik");
-    b.addMother("Dekel","Ella");
-
-    b.addFather("Dikla","Eli");
-    b.addMother("Dikla","Elit");
-
-    b.addFather("Dori","Ezer");
-    b.addMother("Dori","Eliana");
-
-    b.addFather("Dalia","Gilad");
-    b.addMother("Dalia","Gilat");
-
-    b.addFather("Erik","Yuval");
-    b.addMother("Yuval","Zoe");
-    b.addFather("Erik","Yishay");
-
-
-
-
-    //check relation() function
-
-    CHECK(b.relation("Betty") ==string("Just Me"));   
-
-    CHECK(b.relation("Geva")==string("father"));
-    CHECK(b.relation("Gill")==string("mother"));
-
-    CHECK(b.relation("Dekel")==string("grandfather"));
-    CHECK(b.relation("Dikla")==string("grandmother"));
-
-    CHECK(b.relation("Dori")==string("grandfather"));
-    CHECK(b.relation("Dalia")==string("grandmother"));
-
-
-
-    CHECK(b.relation("Erik")==string("great-grandfather"));
-    CHECK(b.relation("Ella")==string("great-grandmother"));
-
-    CHECK(b.relation("Eli")==string("great-grandfather"));
-    CHECK(b.relation("Elit")==string("great-grandmother"));
-
-    CHECK(b.relation("Ezer")==string("great-grandfather"));
-    CHECK(b.relation("Eliana")==string("great-grandmother"));
-
-    CHECK(b.relation("Gilad")==string("great-grandfather"));
-    CHECK(b.relation("Gilat")==string("great-grandmother"));
-
-    CHECK(b.relation("Yuval")==string("great-great-grandfather"));
-    CHECK(b.relation("Zoe")==string("great-great-great-grandmother"));
-    CHECK(b.relation("Yishay")==string("great-great-great-great-grandfather"));
-
-
-
-
-
-
-    //check find() function
-
-    CHECK(b.find("Just Me") == string("Betty")); 
-
-    CHECK(b.find("father") == string("Geva"));
-    CHECK(b.find("mother") == string("Gill"));
-
-    CHECK(b.find("grandfather") == string("Dekel"));
-    CHECK(b.find("grandmother") == string("Dikla"));
-    CHECK(b.find("grandfather") == string("Dori"));
-    CHECK(b.find("grandmother") == string("Dalia"));
-
-    CHECK(b.find("great-grandfather") == string("Erik"));
-    CHECK(b.find("great-grandmother") == string("Ella"));
-    CHECK(b.find("great-grandfather") == string("Eli"));
-    CHECK(b.find("great-grandmother") == string("Elit"));
-    CHECK(b.find("great-grandfather") == string("Ezer"));
-    CHECK(b.find("great-grandmother") == string("Eliana"));
-    CHECK(b.find("great-grandfather") == string("Gilad"));
-    CHECK(b.find("great-grandmother") == string("Gilat"));
-
-    CHECK(b.find("great-great-grandfather") == string("Yuval"));
-    CHECK(b.find("great-great-great-grandmother") == string("Zoe"));
-    CHECK(b.find("great-great-great-great-grandfather") == string("Yishay"));
+//using family::Tree;
+
+    /*
+    The House of Windsor is the reigning royal house of the United Kingdom and the other Commonwealth realms.
+    BTW, Windsor decendants are known today as the royal family of the entire UK ! 
+    */
+
+static family::Tree windsor ("Harry");
+
+TEST_CASE("House of Windsor - addMother && addFather Tests"){
+   CHECK_NOTHROW(windsor.addFather("Harry","Charles"));
+   CHECK_NOTHROW(windsor.addMother("Harry","Diana"));
+   CHECK_THROWS(windsor.addFather("Zeus","Harry"));
+   CHECK_THROWS(windsor.addMother("Zeus","Harry"));
+   CHECK_THROWS(windsor.addFather("Harry","Ron"));
+   CHECK_THROWS(windsor.addMother("Harry","Alex"));
+   CHECK_NOTHROW(windsor.addMother("Charles","Elizabeth_II"));
+   CHECK_THROWS(windsor.addFather("Elizabeth","Zeus"));
+   CHECK_NOTHROW(windsor.addFather("Charles","Phillip"));
+   CHECK_THROWS(windsor.addFather("Charles","Ron"));
+   CHECK_THROWS(windsor.addMother("Charles","Alex"));
+   CHECK_NOTHROW(windsor.addMother("Elizabeth_II","Elizabeth"));
+   CHECK_NOTHROW(windsor.addFather("Elizabeth_II","George_VI"));
+   CHECK_THROWS(windsor.addFather("CElizabeth_II","Ron"));
+   CHECK_THROWS(windsor.addMother("Elizabeth_II","Alex"));
+   CHECK_NOTHROW(windsor.addMother("George_VI","Mary"));
+   CHECK_NOTHROW(windsor.addFather("George_VI","George_V")); 
+   CHECK_THROWS(windsor.addFather("George_VI","Ron"));
+   CHECK_THROWS(windsor.addMother("George_VI","Alex"));
+   CHECK_NOTHROW(windsor.addMother("George_V","Alexandra"));
+   CHECK_NOTHROW(windsor.addFather("George_V","Edward_VII"));      
+   CHECK_THROWS(windsor.addFather("George_V","Ron"));
+   CHECK_THROWS(windsor.addMother("George_V","Alex"));
+   CHECK_NOTHROW(windsor.addMother("Edward_VII","Victoria"));
+   CHECK_NOTHROW(windsor.addFather("Edward_VII","Albert"));
+   CHECK_THROWS(windsor.addFather("Edward_VII","Ron"));
+   CHECK_THROWS(windsor.addMother("Edward_VII","Alex"));
+
+    /*
+    From now on testing the following scenarios:
+    adding parents to a child that is not a part of the royal family (aka, not a node of our tree)
+    Inspired by Shakira's famous song - Waka Waka
+    */
+   CHECK_THROWS(windsor.addFather("pressure","is"));
+   CHECK_THROWS(windsor.addMother("on","you"));
+   CHECK_THROWS(windsor.addFather("feel","it"));
+   CHECK_THROWS(windsor.addMother("But","you've"));
+   CHECK_THROWS(windsor.addFather("got","it"));
+   CHECK_THROWS(windsor.addMother("all","belive"));
+   CHECK_THROWS(windsor.addFather("it","Ron"));
+   CHECK_THROWS(windsor.addMother("when","you"));
+   CHECK_THROWS(windsor.addFather("fall","get"));
+   CHECK_THROWS(windsor.addMother("up","oh"));
+   CHECK_THROWS(windsor.addFather("oh","and"));
+   CHECK_THROWS(windsor.addMother("if","you"));
+   CHECK_THROWS(windsor.addFather("fall","get"));
+   CHECK_THROWS(windsor.addMother("up","oh"));   
+   CHECK_THROWS(windsor.addMother("oh","Tsamina"));
+   CHECK_THROWS(windsor.addFather("mina","zangalewa"));
+   CHECK_THROWS(windsor.addMother("Cause","This"));
+   CHECK_THROWS(windsor.addFather("is","Africa"));
+   CHECK_THROWS(windsor.addMother("Tsamina","mina"));
+   CHECK_THROWS(windsor.addFather("eh","eh"));
+   CHECK_THROWS(windsor.addMother("Waka","waka"));
+   CHECK_THROWS(windsor.addFather("eh","eh"));
+   CHECK_THROWS(windsor.addMother("Tsamina","mina"));
+   CHECK_THROWS(windsor.addFather("mina","zangalewa"));
+   CHECK_THROWS(windsor.addMother("This","time"));
+   CHECK_THROWS(windsor.addFather("for","Africa"));
 
 }
 
-TEST_CASE("This test case check remove() function") 
-{
-    Tree r ("Betty");     
-    r.addFather("Betty","Geva");
-    r.addMother("Betty","Gill");
-    r.addFather("Geva","Dekel");
-    r.addMother("Geva","Dikla");
-    r.addFather("Dekel","Erik");
-    r.addMother("Dekel","Ella");
+
+TEST_CASE("House of Windsor - relation Tests"){
+    // royal
+CHECK(windsor.relation("Charles") == string("father") );
+CHECK(windsor.relation("Diana") == string("mother") );
+CHECK(windsor.relation("Elizabeth_II") == string("grandmother") );
+CHECK(windsor.relation("Phillip") == string("grandfather") );
+CHECK(windsor.relation("Elizabeth") == string("great-grandmother") );
+CHECK(windsor.relation("George_VI") == string("great-grandfather") );
+CHECK(windsor.relation("Mary") == string("great-great-grandmother") );
+CHECK(windsor.relation("George_V") == string("great-great-grandfather") );
+CHECK(windsor.relation("Alexandra") == string("great-great-great-grandmother") );
+CHECK(windsor.relation("Edward_VII") == string("great-great-great-grandfather") );
+CHECK(windsor.relation("Victoria") == string("great-great-great-great-grandmother") );
+CHECK(windsor.relation("Albert") == string("great-great-great-great-grandfather") );
+
+    // not royal
+CHECK( windsor.relation("dog") == string("unrelated") );
+CHECK(windsor.relation("cat") == string("unrelated") );
+CHECK(windsor.relation("fish") == string("unrelated") );
+CHECK(windsor.relation("uncle") == string("unrelated") );
+CHECK(windsor.relation("nephew") == string("unrelated") );
+CHECK(windsor.relation("messi") == string("unrelated") );
+CHECK(windsor.relation("ronaldo") == string("unrelated") );
+CHECK(windsor.relation("lewandovski") == string("unrelated") );
+CHECK(windsor.relation("halland") == string("unrelated") );
+CHECK(windsor.relation("mbape") == string("unrelated") );
+CHECK(windsor.relation("neymar") == string("unrelated") );
+CHECK(windsor.relation("neta") == string("unrelated") );
+CHECK(windsor.relation("ofri") == string("unrelated") );
+CHECK(windsor.relation("ron") == string("unrelated") );
+CHECK(windsor.relation("alex") == string("unrelated") );
 
 
-    ///remove///
-    r.remove("Erik");
-    r.remove("Dikla");
-    r.remove("Gill");
+}
 
-    CHECK_THROWS_AS(r.find("great-grandfather"),std::exception);
-    CHECK_THROWS_AS(r.find("grandmother"),std::exception);
-    CHECK_THROWS_AS(r.find("mother"),std::exception);
+TEST_CASE("House of Windsor - find Tests"){
+    // valid cases
+CHECK(windsor.find("father") == string("Charles") );
+CHECK(windsor.find("mother") == string("Diana") );
+CHECK(windsor.find("grandmother") == string("Elizabeth_II") );
+CHECK(windsor.find("grandfather") == string("Phillip") );
+CHECK(windsor.find("great-grandmother") == string("Elizabeth") );
+CHECK(windsor.find("great-grandfather") == string("George_VI") );
+CHECK(windsor.find("great-great-grandmother") == string("George_V") );
+CHECK(windsor.find("great-great-grandfather") == string("Mary") );
+CHECK(windsor.find("great-great-great-grandmother") == string("Alexandra") );
+CHECK(windsor.find("great-great-great-grandfather") == string("Edward_VII") );
+CHECK(windsor.find("great-great-great-great-grandmother") == string("Victoria") );
+CHECK(windsor.find("great-great-great-great-grandfather") == string("Albert") );
 
-    CHECK(r.relation("Erik") == string("unrelated"));
-    CHECK(r.relation("Dikla") == string("unrelated"));
-    CHECK(r.relation("Gill") == string("unrelated"));
+    // invalid cases
+CHECK_THROWS(windsor.find("dog"));
+CHECK_THROWS(windsor.find("cat"));
+CHECK_THROWS(windsor.find("fish"));
+CHECK_THROWS(windsor.find("uncle"));
+CHECK_THROWS(windsor.find("nephew"));
+CHECK_THROWS(windsor.find("messi"));
+CHECK_THROWS(windsor.find("ronaldo"));
+CHECK_THROWS(windsor.find("lewandovski"));
+CHECK_THROWS(windsor.find("halland"));
+CHECK_THROWS(windsor.find("mbape"));
+CHECK_THROWS(windsor.find("neymar"));
+CHECK_THROWS(windsor.find("neta"));
+CHECK_THROWS(windsor.find("ofri"));
+CHECK_THROWS(windsor.find("ron"));
+CHECK_THROWS(windsor.find("alex"));
 
-    CHECK(r.find("father") == string("Geva"));
-    CHECK(r.find("grandfather") == string("Dekel"));
-    CHECK(r.find("Just me") == string("Betty"));
-    CHECK(r.find("great-grandmother") == string("Ella"));
+}
+
+TEST_CASE("House of Windsor - remove Tests"){
+//CHECK_NOTHROW(windsor.remove("Albert")); // should remove Albert
+//CHECK_THROWS(windsor.remove("Albert")); //   already removed
+CHECK_NOTHROW(windsor.remove("Edward_VII")); // should remove Edward_VII and his mother Victoria
+CHECK_THROWS(windsor.remove("Victoria")); //   already removed
+
+
+// let us delete some people who are not on tree in the first place
+
+CHECK_THROWS(windsor.remove("pressure"));
+CHECK_THROWS(windsor.remove("on"));
+CHECK_THROWS(windsor.remove("you"));
+CHECK_THROWS(windsor.remove("belive"));
+CHECK_THROWS(windsor.remove("it"));
+CHECK_THROWS(windsor.remove("when"));
+CHECK_THROWS(windsor.remove("fall"));
+CHECK_THROWS(windsor.remove("get"));
+CHECK_THROWS(windsor.remove("up"));
+CHECK_THROWS(windsor.remove("Tsamina"));
+CHECK_THROWS(windsor.remove("mina"));
+CHECK_THROWS(windsor.remove("zangalewa"));
+
+
+// remain only with a small family by removing a whole brach
+
+CHECK_NOTHROW(windsor.remove("Charles")); // should work ok
+
 
 }
